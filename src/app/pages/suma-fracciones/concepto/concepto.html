@@ -1,0 +1,139 @@
+<div class="concepto-container">
+  <h1>Suma de fracciones</h1>
+  
+  <div class="story-section">
+    <div class="story-content">
+      <h3>🌱 Historia del Huerto de Marco</h3>
+      <p>Marco tiene una huerta y un jardín.</p>
+      <p>Ha plantado <span class="fraccion">2/7</span> de la huerta con tomates,</p>
+      <p><span class="fraccion">3/7</span> con pimientos y <span class="fraccion">1/7</span> con zanahorias.</p>
+      <p>Después, ha plantado <span class="fraccion">1/4</span> del jardín con flores y <span class="fraccion">2/5</span> con césped.</p>
+      <p class="question">¿Qué fracción de la huerta ha plantado en total? ¿Y del jardín?</p>
+    </div>
+    <div class="story-image">
+      <img src="assets/huerto.png" alt="Huerto de Marco" onerror="this.style.display='none'">
+      <div class="fallback-image">🌱🌻🥕🍅</div>
+    </div>
+  </div>
+
+  <div class="explicacion-grid">
+    <!-- Suma con igual denominador -->
+    <div class="explicacion-card">
+      <div class="card-header">
+        <span class="badge">De la huerta</span>
+        <div class="operacion">
+          Suma <span class="fraccion-inline">2/7</span> + <span class="fraccion-inline">3/7</span> + <span class="fraccion-inline">1/7</span>
+        </div>
+      </div>
+      
+      <div class="card-body">
+        <p class="regla">Las fracciones tienen <strong>igual denominador</strong>: suma los numeradores y deja el mismo denominador.</p>
+        
+        <div class="calculo">
+          <div class="fraccion-suma">
+            <span class="numerador">2</span>
+            <span class="linea"></span>
+            <span class="denominador">7</span>
+          </div>
+          <span class="operador">+</span>
+          <div class="fraccion-suma">
+            <span class="numerador">3</span>
+            <span class="linea"></span>
+            <span class="denominador">7</span>
+          </div>
+          <span class="operador">+</span>
+          <div class="fraccion-suma">
+            <span class="numerador">1</span>
+            <span class="linea"></span>
+            <span class="denominador">7</span>
+          </div>
+          <span class="operador">=</span>
+          <div class="fraccion-suma">
+            <span class="numerador">2 + 3 + 1</span>
+            <span class="linea"></span>
+            <span class="denominador">7</span>
+          </div>
+          <span class="operador">=</span>
+          <div class="fraccion-suma resultado">
+            <span class="numerador">6</span>
+            <span class="linea"></span>
+            <span class="denominador">7</span>
+          </div>
+        </div>
+
+        <p class="conclusion">Ha plantado <span class="fraccion-inline destacado">6/7</span> de la huerta.</p>
+      </div>
+    </div>
+
+    <!-- Suma con diferente denominador -->
+    <div class="explicacion-card">
+      <div class="card-header">
+        <span class="badge">Del jardín</span>
+        <div class="operacion">
+          Suma <span class="fraccion-inline">1/4</span> + <span class="fraccion-inline">2/5</span>
+        </div>
+      </div>
+      
+      <div class="card-body">
+        <p class="regla">Las fracciones tienen <strong>distinto denominador</strong>: redúcelas a común denominador y después suma las fracciones de igual denominador.</p>
+        
+        <div class="calculo">
+          <div class="fraccion-suma">
+            <span class="numerador">1</span>
+            <span class="linea"></span>
+            <span class="denominador">4</span>
+          </div>
+          <span class="operador">+</span>
+          <div class="fraccion-suma">
+            <span class="numerador">2</span>
+            <span class="linea"></span>
+            <span class="denominador">5</span>
+          </div>
+          <span class="operador">=</span>
+          <div class="fraccion-suma">
+            <span class="numerador">5</span>
+            <span class="linea"></span>
+            <span class="denominador">20</span>
+          </div>
+          <span class="operador">+</span>
+          <div class="fraccion-suma">
+            <span class="numerador">8</span>
+            <span class="linea"></span>
+            <span class="denominador">20</span>
+          </div>
+          <span class="operador">=</span>
+          <div class="fraccion-suma">
+            <span class="numerador">5 + 8</span>
+            <span class="linea"></span>
+            <span class="denominador">20</span>
+          </div>
+          <span class="operador">=</span>
+          <div class="fraccion-suma resultado">
+            <span class="numerador">13</span>
+            <span class="linea"></span>
+            <span class="denominador">20</span>
+          </div>
+        </div>
+
+        <p class="conclusion">Ha plantado <span class="fraccion-inline destacado">13/20</span> del jardín.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reglas resumidas -->
+  <div class="reglas-resumen">
+    <div class="regla-box">
+      <div class="icono">➕</div>
+      <p><strong>Para sumar varias fracciones de igual denominador,</strong> se suman los numeradores y se deja el mismo denominador.</p>
+    </div>
+    <div class="regla-box">
+      <div class="icono">🔄</div>
+      <p><strong>Para sumar varias fracciones de distinto denominador,</strong> se reducen las fracciones a común denominador y después se suman los numeradores y se deja el denominador común.</p>
+    </div>
+  </div>
+
+  <nav class="navigation">
+    <a routerLink="/" class="btn btn-home">🏠 Inicio</a>
+    <a routerLink="/ejemplo" class="btn btn-next">➡️ Ver Ejemplos</a>
+  </nav>
+</div>

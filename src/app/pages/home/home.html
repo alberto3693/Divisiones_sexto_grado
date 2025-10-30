@@ -1,0 +1,104 @@
+<div class="home-container">
+  <header class="hero">
+    <div class="hero-content">
+      <h1 class="titulo-principal">
+        <span class="emoji">🧮</span>
+        Operaciones con Fracciones
+      </h1>
+      <p class="subtitulo">
+        Bienvenido al curso interactivo. Aprende suma y resta de fracciones de forma práctica.
+      </p>
+    </div>
+  </header>
+
+  <!-- Vista de selección de cursos -->
+  <section class="cursos-seccion" *ngIf="!cursoSeleccionado">
+    <h2 class="seccion-titulo">Selecciona una operación</h2>
+    <p class="seccion-descripcion">Elige el tema que deseas aprender</p>
+    
+    <div class="cursos-grid">
+      <div *ngFor="let curso of cursos" 
+           class="curso-card"
+           [style.--card-color]="curso.color"
+           (click)="seleccionarCurso(curso)">
+        <div class="curso-icono-grande">{{curso.icono}}</div>
+        <div class="curso-imagen">{{curso.imagen}}</div>
+        <h3 class="curso-titulo">{{curso.titulo}}</h3>
+        <p class="curso-descripcion">{{curso.descripcion}}</p>
+        <button class="curso-btn">Comenzar curso →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vista de módulos del curso seleccionado -->
+  <section class="modulos-seccion" *ngIf="cursoSeleccionado">
+    <button class="btn-volver" (click)="volverACursos()">← Volver a cursos</button>
+    
+    <div class="curso-header-selected">
+      <span class="curso-icono-selected">{{cursoSeleccionado.icono}}</span>
+      <div>
+        <h2 class="seccion-titulo">{{cursoSeleccionado.titulo}}</h2>
+        <p class="seccion-descripcion">Sigue el orden recomendado o elige el módulo que prefieras</p>
+      </div>
+    </div>
+    
+    <div class="modulos-grid">
+      <a *ngFor="let modulo of cursoSeleccionado.modulos" 
+         [routerLink]="modulo.ruta" 
+         class="modulo-card"
+         [style.--card-color]="cursoSeleccionado.color">
+        <div class="modulo-header">
+          <span class="modulo-numero">{{modulo.id}}</span>
+          <span class="modulo-icono">{{modulo.icono}}</span>
+        </div>
+        <div class="modulo-body">
+          <h3 class="modulo-titulo">{{modulo.titulo}}</h3>
+          <p class="modulo-descripcion">{{modulo.descripcion}}</p>
+        </div>
+        <div class="modulo-footer">
+          <span class="modulo-btn">Comenzar →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="caracteristicas">
+    <h2 class="seccion-titulo">¿Qué aprenderás?</h2>
+    <div class="caracteristicas-grid">
+      <div class="caracteristica">
+        <div class="carac-icono">🎯</div>
+        <h3>Fundamentos claros</h3>
+        <p>Comprende qué son las fracciones y cómo funcionan las operaciones</p>
+      </div>
+      <div class="caracteristica">
+        <div class="carac-icono">👁️</div>
+        <h3>Visualización</h3>
+        <p>Representaciones gráficas que hacen el aprendizaje más intuitivo</p>
+      </div>
+      <div class="caracteristica">
+        <div class="carac-icono">🔄</div>
+        <h3>Práctica ilimitada</h3>
+        <p>Ejercicios generados aleatoriamente con diferentes niveles de dificultad</p>
+      </div>
+      <div class="caracteristica">
+        <div class="carac-icono">📊</div>
+        <h3>Retroalimentación</h3>
+        <p>Conoce tus resultados al instante y mejora continuamente</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="consejos">
+    <div class="consejo-box">
+      <div class="consejo-icono">💡</div>
+      <div class="consejo-contenido">
+        <h3>Consejo para aprender mejor</h3>
+        <p>Te recomendamos seguir el orden: primero el <strong>Concepto</strong>, luego los <strong>Ejemplos</strong> y finalmente practica con los <strong>Ejercicios</strong>. ¡Pero puedes empezar donde quieras!</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>🌟 ¡Comienza tu aprendizaje ahora y domina las fracciones! 🌟</p>
+  </footer>
+</div>

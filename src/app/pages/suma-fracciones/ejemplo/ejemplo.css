@@ -1,0 +1,388 @@
+.ejemplo-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+}
+
+h1 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+}
+
+h2 {
+  color: #1976d2;
+  margin: 30px 0 20px 0;
+  font-size: 1.5em;
+}
+
+.ejercicios-section {
+  margin-bottom: 50px;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Grid de ejercicios */
+.ejercicios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.ejercicio-card {
+  background: white;
+  border: 3px solid #2196f3;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.ejercicio-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.ejercicio-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.operacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 1.5em;
+}
+
+.fraccion-visual {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 5px;
+}
+
+.fraccion-visual .num {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #1976d2;
+  padding: 5px 15px;
+}
+
+.fraccion-visual .linea {
+  width: 100%;
+  height: 3px;
+  background: #333;
+  margin: 2px 0;
+}
+
+.fraccion-visual .den {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #d32f2f;
+  padding: 5px 15px;
+}
+
+.fraccion-visual.destacado {
+  background: #fff59d;
+  border: 2px solid #fbc02d;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.op {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #666;
+  margin: 0 5px;
+}
+
+/* Representación visual con cuadros */
+.representacion-visual {
+  margin: 20px 0;
+}
+
+.grid-container {
+  display: grid;
+  gap: 3px;
+  margin: 10px 0;
+  padding: 10px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.cuadro {
+  aspect-ratio: 1;
+  border: 2px solid #333;
+  background: white;
+  border-radius: 3px;
+  transition: all 0.3s;
+}
+
+.cuadro.pintado {
+  background: #4caf50;
+  animation: pintarCuadro 0.5s ease;
+}
+
+.cuadro.pintado-alt {
+  background: #ff9800;
+  animation: pintarCuadro 0.5s ease 0.2s backwards;
+}
+
+@keyframes pintarCuadro {
+  from {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Botones */
+.btn-toggle {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #42a5f5 0%, #1e88e5 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all 0.3s;
+}
+
+.btn-toggle:hover {
+  background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+  transform: scale(1.02);
+}
+
+/* Solución */
+.solucion {
+  margin-top: 15px;
+  padding: 15px;
+  background: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  border-radius: 8px;
+  animation: desplegar 0.3s ease;
+}
+
+@keyframes desplegar {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+.explicacion {
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+.calculo-resultado {
+  text-align: center;
+  font-size: 1.3em;
+  margin: 15px 0;
+  color: #1976d2;
+  font-weight: bold;
+}
+
+.resultado-final {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.fraccion-resultado {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff59d;
+  border: 3px solid #fbc02d;
+  border-radius: 15px;
+  padding: 15px 25px;
+}
+
+.fraccion-resultado .num {
+  font-size: 2em;
+  font-weight: bold;
+  color: #1976d2;
+}
+
+.fraccion-resultado .linea {
+  width: 100%;
+  height: 4px;
+  background: #333;
+  margin: 5px 0;
+}
+
+.fraccion-resultado .den {
+  font-size: 2em;
+  font-weight: bold;
+  color: #d32f2f;
+}
+
+/* Recuerda box */
+.recuerda-box {
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  border: 3px solid #ff9800;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.recuerda-header {
+  background: #ff9800;
+  color: white;
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.recuerda-box p {
+  margin: 10px 0 0 0;
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
+/* Grid pequeño para ejercicios de diferente denominador */
+.ejercicios-grid-small {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.ejercicio-mini {
+  background: white;
+  border: 2px solid #9c27b0;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+}
+
+.operacion-mini {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.btn-mini {
+  width: 100%;
+  padding: 8px;
+  background: #9c27b0;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-mini:hover {
+  background: #7b1fa2;
+}
+
+.solucion-mini {
+  margin-top: 15px;
+  padding: 15px;
+  background: #f3e5f5;
+  border-radius: 8px;
+  animation: desplegar 0.3s ease;
+}
+
+.conversion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* Navegación */
+.navigation {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 30px;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: all 0.3s;
+  font-size: 1.1em;
+}
+
+.btn-prev {
+  background: linear-gradient(135deg, #9e9e9e 0%, #757575 100%);
+  color: white;
+}
+
+.btn-prev:hover {
+  background: linear-gradient(135deg, #757575 0%, #616161 100%);
+  transform: translateY(-2px);
+}
+
+.btn-home {
+  background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+  color: white;
+}
+
+.btn-home:hover {
+  background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+  transform: translateY(-2px);
+}
+
+.btn-next {
+  background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
+  color: white;
+}
+
+.btn-next:hover {
+  background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ejercicios-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .ejercicios-grid-small {
+    grid-template-columns: 1fr;
+  }
+  
+  .operacion, .operacion-mini, .conversion {
+    font-size: 1em;
+  }
+  
+  .navigation {
+    flex-direction: column;
+  }
+}

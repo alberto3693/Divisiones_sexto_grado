@@ -1,0 +1,324 @@
+<div class="ejemplo-container">
+  <header class="header">
+    <button routerLink="/" class="btn-volver">← Inicio</button>
+    <h1 class="titulo">👁️ Ejemplos de Resta de Fracciones</h1>
+    <p class="subtitulo">Observa el proceso paso a paso</p>
+  </header>
+
+  <div class="tipo-selector">
+    <button 
+      (click)="cambiarTipo('igual')"
+      [class.activo]="tipoEjemplo === 'igual'"
+      class="btn-tipo">
+      Igual Denominador
+    </button>
+    <button 
+      (click)="cambiarTipo('distinto')"
+      [class.activo]="tipoEjemplo === 'distinto'"
+      class="btn-tipo">
+      Distinto Denominador
+    </button>
+  </div>
+
+  <div class="ejemplo-card">
+    <div class="problema">
+      <h2>Problema:</h2>
+      <div class="fraccion-problema">
+        <div class="frac">
+          <span class="num">{{ejemploActual.fraccion1.numerador}}</span>
+          <span class="line"></span>
+          <span class="den">{{ejemploActual.fraccion1.denominador}}</span>
+        </div>
+        <span class="operador">−</span>
+        <div class="frac">
+          <span class="num">{{ejemploActual.fraccion2.numerador}}</span>
+          <span class="line"></span>
+          <span class="den">{{ejemploActual.fraccion2.denominador}}</span>
+        </div>
+        <span class="operador">=</span>
+        <span class="interrogacion">?</span>
+      </div>
+    </div>
+
+    <!-- Barra de progreso -->
+    <div class="progreso-container">
+      <div class="progreso-barra">
+        <div class="progreso-lleno" [style.width.%]="(pasoActual / totalPasos) * 100"></div>
+      </div>
+      <p class="progreso-texto">Paso {{pasoActual}} de {{totalPasos}}</p>
+    </div>
+
+    <!-- Pasos para IGUAL DENOMINADOR -->
+    <div *ngIf="tipoEjemplo === 'igual'" class="pasos">
+      <div class="paso" [class.activo]="pasoActual >= 0">
+        <div class="paso-numero">1</div>
+        <div class="paso-contenido">
+          <h3>Identificar los denominadores</h3>
+          <p>Los denominadores son <strong>iguales</strong> (ambos son {{ejemploActual.fraccion1.denominador}})</p>
+        </div>
+      </div>
+
+      <div class="paso" [class.activo]="pasoActual >= 1">
+        <div class="paso-numero">2</div>
+        <div class="paso-contenido">
+          <h3>Restar los numeradores</h3>
+          <p>{{ejemploActual.fraccion1.numerador}} − {{ejemploActual.fraccion2.numerador}} = {{ejemploActual.resultadoSinSimplificar.numerador}}</p>
+          <div class="visualizacion">
+            <div class="cuadricula-grupo">
+              <p>{{ejemploActual.fraccion1.numerador}}/{{ejemploActual.fraccion1.denominador}}</p>
+              <div class="cuadricula">
+                <div *ngFor="let c of generarCuadricula(ejemploActual.fraccion1.numerador, ejemploActual.fraccion1.denominador)" 
+                     class="cuadro" [class.lleno]="c"></div>
+              </div>
+            </div>
+            <span class="op">−</span>
+            <div class="cuadricula-grupo">
+              <p>{{ejemploActual.fraccion2.numerador}}/{{ejemploActual.fraccion2.denominador}}</p>
+              <div class="cuadricula">
+                <div *ngFor="let c of generarCuadricula(ejemploActual.fraccion2.numerador, ejemploActual.fraccion2.denominador)" 
+                     class="cuadro" [class.lleno]="c"></div>
+              </div>
+            </div>
+            <span class="op">=</span>
+            <div class="cuadricula-grupo">
+              <p>{{ejemploActual.resultadoSinSimplificar.numerador}}/{{ejemploActual.resultadoSinSimplificar.denominador}}</p>
+              <div class="cuadricula">
+                <div *ngFor="let c of generarCuadricula(ejemploActual.resultadoSinSimplificar.numerador, ejemploActual.resultadoSinSimplificar.denominador)" 
+                     class="cuadro resultado" [class.lleno]="c"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="paso" [class.activo]="pasoActual >= 2">
+        <div class="paso-numero">3</div>
+        <div class="paso-contenido">
+          <h3>Mantener el denominador</h3>
+          <p>El denominador se mantiene igual: <strong>{{ejemploActual.fraccion1.denominador}}</strong></p>
+          <div class="formula-resultado">
+            <div class="frac">
+              <span class="num">{{ejemploActual.resultadoSinSimplificar.numerador}}</span>
+              <span class="line"></span>
+              <span class="den">{{ejemploActual.resultadoSinSimplificar.denominador}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="paso" [class.activo]="pasoActual >= 3">
+        <div class="paso-numero">✓</div>
+        <div class="paso-contenido">
+          <h3>Resultado Final</h3>
+          <div class="resultado-final">
+            <div class="frac grande">
+              <span class="num">{{ejemploActual.resultado.numerador}}</span>
+              <span class="line"></span>
+              <span class="den">{{ejemploActual.resultado.denominador}}</span>
+            </div>
+            <p *ngIf="ejemploActual.resultado.numerador !== ejemploActual.resultadoSinSimplificar.numerador">
+              (Simplificado de {{ejemploActual.resultadoSinSimplificar.numerador}}/{{ejemploActual.resultadoSinSimplificar.denominador}})
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="paso" [class.activo]="pasoActual >= 4">
+        <div class="paso-numero">5</div>
+        <div class="paso-contenido">
+          <h3>Simplificar (si es posible)</h3>
+          <div class="resultado-final">
+            <div class="frac grande">
+              <span class="num">{{ejemploActual.resultado.numerador}}</span>
+              <span class="line"></span>
+              <span class="den">{{ejemploActual.resultado.denominador}}</span>
+            </div>
+            <p *ngIf="ejemploActual.resultado.numerador !== ejemploActual.resultadoSinSimplificar.numerador || ejemploActual.resultado.denominador !== ejemploActual.resultadoSinSimplificar.denominador">
+              (Simplificado de {{ejemploActual.resultadoSinSimplificar.numerador}}/{{ejemploActual.resultadoSinSimplificar.denominador}})
+            </p>
+            <p *ngIf="ejemploActual.resultado.numerador === ejemploActual.resultadoSinSimplificar.numerador && ejemploActual.resultado.denominador === ejemploActual.resultadoSinSimplificar.denominador">
+              (La fracción ya está simplificada)
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controles de navegación -->
+    <div class="controles">
+      <button 
+        (click)="pasoAnterior()" 
+        [disabled]="pasoActual === 0"
+        class="btn-control">
+        ← Anterior
+      </button>
+      
+      <button 
+        (click)="siguientePaso()" 
+        [disabled]="pasoActual === totalPasos"
+        class="btn-control btn-siguiente">
+        Siguiente →
+      </button>
+    </div>
+
+    <button (click)="generarNuevoEjemplo()" class="btn-nuevo">
+      🔄 Nuevo Ejemplo
+    </button>
+  </div>
+
+  <div class="navegacion">
+    <button routerLink="/conceptoresta" class="btn-nav">
+      ← Volver a Concepto
+    </button>
+    <button routerLink="/ejercicioresta" class="btn-nav btn-ejercicios">
+      Ir a Ejercicios →
+    </button>
+  </div>
+</div>
+    <div class="paso" [class.activo]="pasoActual >= 1">
+        <div class="paso-numero">2</div>
+        <div class="paso-contenido">
+          <h3>Restar los numeradores</h3>
+          <p>{{ejemploActual.fraccion1.numerador}} − {{ejemploActual.fraccion2.numerador}} = {{ejemploActual.resultadoSinSimplificar.numerador}}</p>
+          <div class="visualizacion">
+            <div class="cuadricula-grupo">
+              <p>{{ejemploActual.fraccion1.numerador}}/{{ejemploActual.fraccion1.denominador}}</p>
+              <div class="cuadricula">
+                <div *ngFor="let c of generarCuadricula(ejemploActual.fraccion1.numerador, ejemploActual.fraccion1.denominador)" 
+                     class="cuadro" [class.lleno]="c"></div>
+              </div>
+            </div>
+            <span class="op">−</span>
+            <div class="cuadricula-grupo">
+              <p>{{ejemploActual.fraccion2.numerador}}/{{ejemploActual.fraccion2.denominador}}</p>
+              <div class="cuadricula">
+                <div *ngFor="let c of generarCuadricula(ejemploActual.fraccion2.numerador, ejemploActual.fraccion2.denominador)" 
+                     class="cuadro" [class.lleno]="c"></div>
+              </div>
+            </div>
+            <span class="op">=</span>
+            <div class="cuadricula-grupo">
+              <p>{{ejemploActual.resultadoSinSimplificar.numerador}}/{{ejemploActual.resultadoSinSimplificar.denominador}}</p>
+              <div class="cuadricula">
+                <div *ngFor="let c of generarCuadricula(ejemploActual.resultadoSinSimplificar.numerador, ejemploActual.resultadoSinSimplificar.denominador)" 
+                     class="cuadro resultado" [class.lleno]="c"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="paso" [class.activo]="pasoActual >= 2">
+        <div class="paso-numero">3</div>
+        <div class="paso-contenido">
+          <h3>Mantener el denominador</h3>
+          <p>El denominador se mantiene igual: <strong>{{ejemploActual.fraccion1.denominador}}</strong></p>
+          <div class="formula-resultado">
+            <div class="frac">
+              <span class="num">{{ejemploActual.resultadoSinSimplificar.numerador}}</span>
+              <span class="line"></span>
+              <span class="den">{{ejemploActual.resultadoSinSimplificar.denominador}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="paso" [class.activo]="pasoActual >= 3">
+        <div class="paso-numero">✓</div>
+        <div class="paso-contenido">
+          <h3>Resultado Final</h3>
+          <div class="resultado-final">
+            <div class="frac grande">
+              <span class="num">{{ejemploActual.resultado.numerador}}</span>
+              <span class="line"></span>
+              <span class="den">{{ejemploActual.resultado.denominador}}</span>
+            </div>
+            <p *ngIf="ejemploActual.resultado.numerador !== ejemploActual.resultadoSinSimplificar.numerador">
+              (Simplificado de {{ejemploActual.resultadoSinSimplificar.numerador}}/{{ejemploActual.resultadoSinSimplificar.denominador}})
+            </p>
+          </div>
+        </div>
+      </div>
+
+    <!-- Pasos para DISTINTO DENOMINADOR -->
+    <div *ngIf="tipoEjemplo === 'distinto'" class="pasos">
+      <div class="paso" [class.activo]="pasoActual >= 0">
+        <div class="paso-numero">1</div>
+        <div class="paso-contenido">
+          <h3>Identificar los denominadores</h3>
+          <p>Los denominadores son <strong>diferentes</strong> ({{ejemploActual.fraccion1.denominador}} y {{ejemploActual.fraccion2.denominador}})</p>
+          <p>Necesitamos encontrar el MCM (Mínimo Común Múltiplo)</p>
+        </div>
+      </div>
+
+      <div class="paso" [class.activo]="pasoActual >= 1">
+        <div class="paso-numero">2</div>
+        <div class="paso-contenido">
+          <h3>Calcular el MCM</h3>
+          <p>MCM({{ejemploActual.fraccion1.denominador}}, {{ejemploActual.fraccion2.denominador}}) = <strong>{{ejemploActual.mcm}}</strong></p>
+        </div>
+      </div>
+
+      <div class="paso" [class.activo]="pasoActual >= 2">
+        <div class="paso-numero">3</div>
+        <div class="paso-contenido">
+          <h3>Convertir a fracciones equivalentes</h3>
+          <div class="conversion">
+            <div class="conversion-item">
+              <div class="frac">
+                <span class="num">{{ejemploActual.fraccion1.numerador}}</span>
+                <span class="line"></span>
+                <span class="den">{{ejemploActual.fraccion1.denominador}}</span>
+              </div>
+              <span class="igual">=</span>
+              <div class="frac destacado">
+                <span class="num">{{ejemploActual.fraccion1Convertida.numerador}}</span>
+                <span class="line"></span>
+                <span class="den">{{ejemploActual.mcm}}</span>
+              </div>
+              <span class="explicacion">(×{{ejemploActual.mcm / ejemploActual.fraccion1.denominador}})</span>
+            </div>
+            <div class="conversion-item">
+              <div class="frac">
+                <span class="num">{{ejemploActual.fraccion2.numerador}}</span>
+                <span class="line"></span>
+                <span class="den">{{ejemploActual.fraccion2.denominador}}</span>
+              </div>
+              <span class="igual">=</span>
+              <div class="frac destacado">
+                <span class="num">{{ejemploActual.fraccion2Convertida.numerador}}</span>
+                <span class="line"></span>
+                <span class="den">{{ejemploActual.mcm}}</span>
+              </div>
+              <span class="explicacion">(×{{ejemploActual.mcm / ejemploActual.fraccion2.denominador}})</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="paso" [class.activo]="pasoActual >= 3">
+        <div class="paso-numero">4</div>
+        <div class="paso-contenido">
+          <h3>Restar los numeradores</h3>
+          <p>{{ejemploActual.fraccion1Convertida.numerador}} − {{ejemploActual.fraccion2Convertida.numerador}} = {{ejemploActual.resultadoSinSimplificar.numerador}}</p>
+          <div class="formula-resultado">
+            <div class="frac">
+              <span class="num">{{ejemploActual.fraccion1Convertida.numerador}}</span>
+              <span class="line"></span>
+              <span class="den">{{ejemploActual.mcm}}</span>
+            </div>
+            <span class="op">−</span>
+            <div class="frac">
+              <span class="num">{{ejemploActual.fraccion2Convertida.numerador}}</span>
+              <span class="line"></span>
+              <span class="den">{{ejemploActual.mcm}}</span>
+            </div>
+            <span class="op">=</span>
+            <div class="frac">
+              <span class="num">{{ejemploActual.resultadoSinSimplificar.numerador}}</span>
+              <span class="line"></span>
+              <span class="den">{{ejemploActual.mcm}}</span>
+            </div>
+          </div>
+        </div>
+      </div>

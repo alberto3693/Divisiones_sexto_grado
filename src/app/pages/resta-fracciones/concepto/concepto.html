@@ -1,0 +1,224 @@
+<div class="concepto-container">
+  <header class="header">
+    <button routerLink="/" class="btn-volver">← Inicio</button>
+    <h1 class="titulo">📚 Resta de Fracciones</h1>
+    <p class="subtitulo">Aprende cómo restar fracciones paso a paso</p>
+  </header>
+
+  <div class="historia-contenedor">
+    <div class="historia-card">
+      <div class="historia-icono">🧃</div>
+      <div class="historia-texto">
+        <h2>La historia de Silvia</h2>
+        <p>Silvia tenía en una jarra <strong>7/10</strong> de litro de zumo de piña y en otra jarra <strong>3/10</strong> de litro de zumo de naranja.</p>
+        <p>Llena de zumo de piña un vaso de <strong>3/10</strong> de litro, y de naranja una taza de <strong>1/5</strong> de litro.</p>
+        <p class="pregunta">¿Qué fracción de litro de zumo queda en cada jarra?</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="seccion-principal">
+    <div class="columna">
+      <div class="ejemplo-card igual-denominador">
+        <div class="badge">Piña - Igual Denominador</div>
+        <h3 class="ejemplo-titulo">
+          Resta <span class="fraccion-inline"><sup>3</sup>/<sub>10</sub></span> a <span class="fraccion-inline"><sup>7</sup>/<sub>10</sub></span>
+        </h3>
+        
+        <div class="visualizacion">
+          <div class="jarra-visual">
+            <div class="etiqueta">Jarra inicial: 7/10</div>
+            <div class="cuadricula">
+              <div *ngFor="let cuadro of generarCuadricula(7, 10)" 
+                   class="cuadro"
+                   [class.lleno]="cuadro"></div>
+            </div>
+          </div>
+
+          <div class="operacion-visual">
+            <span class="simbolo-resta">−</span>
+          </div>
+
+          <div class="jarra-visual">
+            <div class="etiqueta">Toma 3/10</div>
+            <div class="cuadricula">
+              <div *ngFor="let cuadro of generarCuadricula(3, 10)" 
+                   class="cuadro"
+                   [class.lleno]="cuadro"></div>
+            </div>
+          </div>
+
+          <div class="operacion-visual">
+            <span class="simbolo-igual">=</span>
+          </div>
+
+          <div class="jarra-visual">
+            <div class="etiqueta">Queda: 4/10</div>
+            <div class="cuadricula">
+              <div *ngFor="let cuadro of generarCuadricula(4, 10)" 
+                   class="cuadro resultado"
+                   [class.lleno]="cuadro"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="proceso">
+          <h4>📝 Proceso:</h4>
+          <div class="paso">
+            <span class="numero-paso">1</span>
+            <p>Las fracciones tienen <strong>igual denominador</strong></p>
+          </div>
+          <div class="paso">
+            <span class="numero-paso">2</span>
+            <p>Se restan los numeradores: <strong>7 − 3 = 4</strong></p>
+          </div>
+          <div class="paso">
+            <span class="numero-paso">3</span>
+            <p>Se deja el mismo denominador: <strong>10</strong></p>
+          </div>
+        </div>
+
+        <div class="formula">
+          <div class="fraccion-grande">
+            <span class="num">7</span>
+            <span class="line"></span>
+            <span class="den">10</span>
+          </div>
+          <span class="operador">−</span>
+          <div class="fraccion-grande">
+            <span class="num">3</span>
+            <span class="line"></span>
+            <span class="den">10</span>
+          </div>
+          <span class="operador">=</span>
+          <div class="fraccion-grande">
+            <span class="num">7 − 3</span>
+            <span class="line"></span>
+            <span class="den">10</span>
+          </div>
+          <span class="operador">=</span>
+          <div class="fraccion-grande resultado-box">
+            <span class="num">4</span>
+            <span class="line"></span>
+            <span class="den">10</span>
+          </div>
+        </div>
+
+        <div class="respuesta">
+          Quedan <strong>4/10</strong> de litro de zumo de piña
+        </div>
+      </div>
+    </div>
+
+    <div class="columna">
+      <div class="ejemplo-card distinto-denominador">
+        <div class="badge">Naranja - Distinto Denominador</div>
+        <h3 class="ejemplo-titulo">
+          Resta <span class="fraccion-inline"><sup>1</sup>/<sub>5</sub></span> a <span class="fraccion-inline"><sup>3</sup>/<sub>4</sub></span>
+        </h3>
+        
+        <div class="proceso">
+          <h4>📝 Proceso:</h4>
+          <div class="paso">
+            <span class="numero-paso">1</span>
+            <p>Las fracciones tienen <strong>distinto denominador</strong></p>
+          </div>
+          <div class="paso">
+            <span class="numero-paso">2</span>
+            <p>Reducir a <strong>común denominador</strong>. El MCM(4, 5) = <strong>20</strong></p>
+          </div>
+          <div class="paso">
+            <span class="numero-paso">3</span>
+            <p>Convertir fracciones equivalentes:</p>
+            <ul>
+              <li>3/4 = 15/20 (multiplicar por 5)</li>
+              <li>1/5 = 4/20 (multiplicar por 4)</li>
+            </ul>
+          </div>
+          <div class="paso">
+            <span class="numero-paso">4</span>
+            <p>Restar numeradores: <strong>15 − 4 = 11</strong></p>
+          </div>
+        </div>
+
+        <div class="formula-vertical">
+          <div class="linea-formula">
+            <div class="fraccion-media">
+              <span class="num">3</span>
+              <span class="line"></span>
+              <span class="den">4</span>
+            </div>
+            <span class="operador">−</span>
+            <div class="fraccion-media">
+              <span class="num">1</span>
+              <span class="line"></span>
+              <span class="den">5</span>
+            </div>
+          </div>
+          
+          <div class="flecha">↓ Común denominador (MCM = 20)</div>
+          
+          <div class="linea-formula">
+            <div class="fraccion-media">
+              <span class="num">15</span>
+              <span class="line"></span>
+              <span class="den">20</span>
+            </div>
+            <span class="operador">−</span>
+            <div class="fraccion-media">
+              <span class="num">4</span>
+              <span class="line"></span>
+              <span class="den">20</span>
+            </div>
+          </div>
+          
+          <div class="flecha">↓ Restar numeradores</div>
+          
+          <div class="linea-formula">
+            <div class="fraccion-media">
+              <span class="num">15 − 4</span>
+              <span class="line"></span>
+              <span class="den">20</span>
+            </div>
+            <span class="operador">=</span>
+            <div class="fraccion-media resultado-box">
+              <span class="num">11</span>
+              <span class="line"></span>
+              <span class="den">20</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="respuesta">
+          Quedan <strong>11/20</strong> de litro de zumo de naranja
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reglas-importantes">
+    <h3>📌 Reglas Importantes</h3>
+    <div class="reglas-grid">
+      <div class="regla">
+        <div class="regla-icono">👉</div>
+        <div class="regla-contenido">
+          <h4>Igual denominador</h4>
+          <p>Se restan los numeradores y se deja el mismo denominador</p>
+        </div>
+      </div>
+      <div class="regla">
+        <div class="regla-icono">🔄</div>
+        <div class="regla-contenido">
+          <h4>Distinto denominador</h4>
+          <p>Reducir a común denominador y después restar los numeradores, dejando el denominador común</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="navegacion">
+    <button routerLink="/ejemploresta" class="btn-siguiente">
+      Continuar a Ejemplos →
+    </button>
+  </div>
+</div>

@@ -1,0 +1,180 @@
+<div class="ejercicio-container">
+  <h1>✏️ Practica: Suma de Fracciones</h1>
+
+  <!-- Panel de configuración -->
+  <div class="config-panel">
+    <div class="config-group">
+      <label>Tipo de ejercicio:</label>
+      <div class="btn-group">
+        <button [class.active]="tipoEjercicio === 'igual'" 
+                (click)="cambiarTipo('igual')">
+          Igual denominador
+        </button>
+        <button [class.active]="tipoEjercicio === 'diferente'" 
+                (click)="cambiarTipo('diferente')">
+          Diferente denominador
+        </button>
+      </div>
+    </div>
+
+    <div class="config-group">
+      <label>Dificultad:</label>
+      <div class="btn-group">
+        <button [class.active]="dificultad === 'facil'" 
+                (click)="cambiarDificultad('facil')">
+          😊 Fácil
+        </button>
+        <button [class.active]="dificultad === 'medio'" 
+                (click)="cambiarDificultad('medio')">
+          🤔 Medio
+        </button>
+        <button [class.active]="dificultad === 'dificil'" 
+                (click)="cambiarDificultad('dificil')">
+          🔥 Difícil
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Estadísticas -->
+  <div class="estadisticas">
+    <div class="stat-card">
+      <div class="stat-icon">📊</div>
+      <div class="stat-info">
+        <div class="stat-value">{{intentos}}</div>
+        <div class="stat-label">Intentos</div>
+      </div>
+    </div>
+    <div class="stat-card aciertos">
+      <div class="stat-icon">✅</div>
+      <div class="stat-info">
+        <div class="stat-value">{{aciertos}}</div>
+        <div class="stat-label">Aciertos</div>
+      </div>
+    </div>
+    <div class="stat-card errores">
+      <div class="stat-icon">❌</div>
+      <div class="stat-info">
+        <div class="stat-value">{{errores}}</div>
+        <div class="stat-label">Errores</div>
+      </div>
+    </div>
+    <div class="stat-card porcentaje">
+      <div class="stat-icon">🎯</div>
+      <div class="stat-info">
+        <div class="stat-value">{{porcentajeAciertos}}%</div>
+        <div class="stat-label">Precisión</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Área del ejercicio -->
+  <div class="ejercicio-main">
+    <h2>Resuelve la siguiente suma:</h2>
+    
+    <div class="problema">
+      <div class="fraccion-display">
+        <span class="numerador">{{fraccion1.numerador}}</span>
+        <span class="linea"></span>
+        <span class="denominador">{{fraccion1.denominador}}</span>
+      </div>
+      
+      <span class="operador">+</span>
+      
+      <div class="fraccion-display">
+        <span class="numerador">{{fraccion2.numerador}}</span>
+        <span class="linea"></span>
+        <span class="denominador">{{fraccion2.denominador}}</span>
+      </div>
+      
+      <span *ngIf="fraccion3" class="operador">+</span>
+      
+      <div *ngIf="fraccion3" class="fraccion-display">
+        <span class="numerador">{{fraccion3.numerador}}</span>
+        <span class="linea"></span>
+        <span class="denominador">{{fraccion3.denominador}}</span>
+      </div>
+      
+      <span class="operador">=</span>
+      
+      <span class="interrogacion">?</span>
+    </div>
+
+    <!-- Pista según el tipo -->
+    <div class="pista" *ngIf="tipoEjercicio === 'diferente'">
+      💡 <strong>Pista:</strong> Recuerda encontrar el mínimo común múltiplo (MCM) de los denominadores primero.
+    </div>
+
+    <!-- Área de respuesta -->
+    <div class="respuesta-area">
+      <h3>Tu respuesta:</h3>
+      <div class="fraccion-input">
+        <input type="number" 
+               [(ngModel)]="respuestaNumerador" 
+               placeholder="Numerador"
+               class="input-numerador"
+               (keyup.enter)="verificar()">
+        <div class="linea-input"></div>
+        <input type="number" 
+               [(ngModel)]="respuestaDenominador" 
+               placeholder="Denominador"
+               class="input-denominador"
+               (keyup.enter)="verificar()">
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="acciones">
+      <button class="btn btn-verificar" (click)="verificar()">
+        🔍 Verificar
+      </button>
+      <button class="btn btn-nuevo" (click)="nuevoEjercicio()">
+        🔄 Nuevo Ejercicio
+      </button>
+      <button class="btn btn-reiniciar" (click)="reiniciarEstadisticas()">
+        ♻️ Reiniciar
+      </button>
+    </div>
+
+    <!-- Retroalimentación -->
+    <div *ngIf="mostrarRetroalimentacion" 
+         class="retroalimentacion"
+         [class.correcta]="esCorrecta"
+         [class.incorrecta]="!esCorrecta">
+      <div class="retro-content">
+        <div class="retro-icon">{{esCorrecta ? '🎉' : '📚'}}</div>
+        <div class="retro-mensaje">{{mensaje}}</div>
+      </div>
+      
+      <div *ngIf="!esCorrecta && tipoEjercicio === 'diferente'" class="explicacion-rapida">
+        <p><strong>Proceso:</strong></p>
+        <ol>
+          <li>MCM({{fraccion1.denominador}}, {{fraccion2.denominador}}) = {{resultadoCorrecto.denominador / calcularMCD(resultadoCorrecto.denominador, fraccion1.denominador * fraccion2.denominador / calcularMCM(fraccion1.denominador, fraccion2.denominador))}}</li>
+          <li>Convierte ambas fracciones al denominador común</li>
+          <li>Suma los numeradores</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- Historial -->
+  <div class="historial" *ngIf="historial.length > 0">
+    <h3>📋 Historial (últimos 5)</h3>
+    <div class="historial-lista">
+      <div *ngFor="let item of historial.slice(-5).reverse()" 
+           class="historial-item"
+           [class.correcto]="item.correcto"
+           [class.incorrecto]="!item.correcto">
+        <span class="ejercicio-texto">{{item.ejercicio}}</span>
+        <span class="respuesta-texto">= {{item.respuesta}}</span>
+        <span class="resultado-icono">{{item.correcto ? '✅' : '❌'}}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navegación -->
+  <nav class="navigation">
+    <a routerLink="/ejemplo" class="btn nav-btn btn-prev">⬅️ Ejemplos</a>
+    <a routerLink="/" class="btn nav-btn btn-home">🏠 Inicio</a>
+  </nav>
+</div>

@@ -1,0 +1,186 @@
+<div class="ejercicio-container">
+  <header class="header">
+    <button routerLink="/" class="btn-volver">← Inicio</button>
+    <h1 class="titulo">✍️ Ejercicios de Resta de Fracciones</h1>
+    <p class="subtitulo">Practica y mejora tus habilidades</p>
+  </header>
+
+  <!-- Estadísticas -->
+  <div class="estadisticas">
+    <div class="stat-card">
+      <div class="stat-icono">✅</div>
+      <div class="stat-info">
+        <p class="stat-valor">{{estadisticas.correctas}}</p>
+        <p class="stat-label">Correctas</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icono">❌</div>
+      <div class="stat-info">
+        <p class="stat-valor">{{estadisticas.incorrectas}}</p>
+        <p class="stat-label">Incorrectas</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icono">📊</div>
+      <div class="stat-info">
+        <p class="stat-valor">{{porcentajeAciertos}}%</p>
+        <p class="stat-label">Aciertos</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icono">🎯</div>
+      <div class="stat-info">
+        <p class="stat-valor">{{estadisticas.total}}</p>
+        <p class="stat-label">Total</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Selector de dificultad -->
+  <div class="dificultad-selector">
+    <h3>Nivel de dificultad:</h3>
+    <div class="dificultad-botones">
+      <button 
+        (click)="cambiarDificultad('facil')"
+        [class.activo]="dificultad === 'facil'"
+        class="btn-dificultad facil">
+        😊 Fácil (Igual denominador)
+      </button>
+      <button 
+        (click)="cambiarDificultad('medio')"
+        [class.activo]="dificultad === 'medio'"
+        class="btn-dificultad medio">
+        🤔 Medio (Distinto denominador)
+      </button>
+      <button 
+        (click)="cambiarDificultad('dificil')"
+        [class.activo]="dificultad === 'dificil'"
+        class="btn-dificultad dificil">
+        🔥 Difícil (Distinto denominador)
+      </button>
+    </div>
+  </div>
+
+  <!-- Tarjeta de ejercicio -->
+  <div class="ejercicio-card">
+    <div class="ejercicio-info">
+      <span class="badge" [class.igual]="tieneDenominadorIgual" [class.distinto]="!tieneDenominadorIgual">
+        {{tieneDenominadorIgual ? 'Igual Denominador' : 'Distinto Denominador'}}
+      </span>
+    </div>
+
+    <div class="problema-visual">
+      <h2>Resuelve:</h2>
+      <div class="operacion">
+        <div class="fraccion">
+          <span class="numerador">{{ejercicioActual.fraccion1.numerador}}</span>
+          <span class="linea"></span>
+          <span class="denominador">{{ejercicioActual.fraccion1.denominador}}</span>
+        </div>
+        <span class="operador">−</span>
+        <div class="fraccion">
+          <span class="numerador">{{ejercicioActual.fraccion2.numerador}}</span>
+          <span class="linea"></span>
+          <span class="denominador">{{ejercicioActual.fraccion2.denominador}}</span>
+        </div>
+        <span class="operador">=</span>
+        <div class="fraccion respuesta">
+          <input 
+            type="number" 
+            [(ngModel)]="respuestaNumerador"
+            placeholder="?"
+            class="input-numerador"
+            [disabled]="mostrarResultado">
+          <span class="linea"></span>
+          <input 
+            type="number" 
+            [(ngModel)]="respuestaDenominador"
+            placeholder="?"
+            class="input-denominador"
+            [disabled]="mostrarResultado">
+        </div>
+      </div>
+    </div>
+
+    <!-- Pistas -->
+    <div class="pistas" *ngIf="!mostrarResultado">
+      <h3>💡 Pistas:</h3>
+      <div *ngIf="tieneDenominadorIgual" class="pista">
+        <p><strong>Paso 1:</strong> Los denominadores son iguales ({{ejercicioActual.fraccion1.denominador}})</p>
+        <p><strong>Paso 2:</strong> Resta los numeradores: {{ejercicioActual.fraccion1.numerador}} − {{ejercicioActual.fraccion2.numerador}}</p>
+        <p><strong>Paso 3:</strong> Mantén el mismo denominador</p>
+      </div>
+      <div *ngIf="!tieneDenominadorIgual" class="pista">
+        <p><strong>Paso 1:</strong> Los denominadores son diferentes ({{ejercicioActual.fraccion1.denominador}} y {{ejercicioActual.fraccion2.denominador}})</p>
+        <p><strong>Paso 2:</strong> Encuentra el MCM = {{ejercicioActual.mcm}}</p>
+        <p><strong>Paso 3:</strong> Convierte a fracciones equivalentes:</p>
+        <ul>
+          <li>{{ejercicioActual.fraccion1.numerador}}/{{ejercicioActual.fraccion1.denominador}} = {{ejercicioActual.fraccion1Convertida.numerador}}/{{ejercicioActual.mcm}}</li>
+          <li>{{ejercicioActual.fraccion2.numerador}}/{{ejercicioActual.fraccion2.denominador}} = {{ejercicioActual.fraccion2Convertida.numerador}}/{{ejercicioActual.mcm}}</li>
+        </ul>
+        <p><strong>Paso 4:</strong> Resta los numeradores y simplifica si es posible</p>
+      </div>
+    </div>
+
+    <!-- Mensaje de resultado -->
+    <div *ngIf="mostrarResultado" class="resultado-mensaje" [class.correcto]="esCorrecta" [class.incorrecto]="!esCorrecta">
+      <p>{{mensaje}}</p>
+      <div *ngIf="!esCorrecta" class="explicacion">
+        <h4>📝 Explicación:</h4>
+        <div *ngIf="tieneDenominadorIgual">
+          <p>Como los denominadores son iguales:</p>
+          <p class="formula-explicacion">
+            {{ejercicioActual.fraccion1.numerador}}/{{ejercicioActual.fraccion1.denominador}} − 
+            {{ejercicioActual.fraccion2.numerador}}/{{ejercicioActual.fraccion2.denominador}} = 
+            ({{ejercicioActual.fraccion1.numerador}} − {{ejercicioActual.fraccion2.numerador}})/{{ejercicioActual.fraccion1.denominador}} = 
+            {{ejercicioActual.resultado.numerador}}/{{ejercicioActual.resultado.denominador}}
+          </p>
+        </div>
+        <div *ngIf="!tieneDenominadorIgual">
+          <p>Como los denominadores son diferentes, convertimos a MCM = {{ejercicioActual.mcm}}:</p>
+          <p class="formula-explicacion">
+            {{ejercicioActual.fraccion1Convertida.numerador}}/{{ejercicioActual.mcm}} − 
+            {{ejercicioActual.fraccion2Convertida.numerador}}/{{ejercicioActual.mcm}} = 
+            {{ejercicioActual.resultadoSinSimplificar.numerador}}/{{ejercicioActual.mcm}}
+          </p>
+          <p *ngIf="ejercicioActual.resultado.numerador !== ejercicioActual.resultadoSinSimplificar.numerador">
+            Simplificado: {{ejercicioActual.resultado.numerador}}/{{ejercicioActual.resultado.denominador}}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="acciones">
+      <button 
+        *ngIf="!mostrarResultado"
+        (click)="verificarRespuesta()" 
+        class="btn-verificar">
+        ✓ Verificar Respuesta
+      </button>
+      <button 
+        *ngIf="mostrarResultado"
+        (click)="generarNuevoEjercicio()" 
+        class="btn-siguiente-ejercicio">
+        Siguiente Ejercicio →
+      </button>
+    </div>
+  </div>
+
+  <!-- Botones inferiores -->
+  <div class="botones-inferiores">
+    <button (click)="reiniciarEstadisticas()" class="btn-reiniciar">
+      🔄 Reiniciar Estadísticas
+    </button>
+  </div>
+
+  <div class="navegacion">
+    <button routerLink="/ejemploresta" class="btn-nav">
+      ← Volver a Ejemplos
+    </button>
+    <button routerLink="/" class="btn-nav btn-home">
+      🏠 Ir al Inicio
+    </button>
+  </div>
+</div>
