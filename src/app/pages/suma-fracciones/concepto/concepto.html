@@ -1,17 +1,94 @@
 <div class="concepto-container">
   <h1>Suma de fracciones</h1>
   
+  <!-- Sección de Concepto y Referencias -->
+  <div class="concepto-teorico">
+    <div class="concepto-header">
+      <h2>📚 Concepto</h2>
+      <button class="btn-referencias" (click)="toggleReferencias()">
+        {{ mostrarReferencias ? '📖 Ocultar Referencias' : '📖 Ver Referencias' }}
+      </button>
+    </div>
+    
+    <div class="concepto-lista">
+      <div class="concepto-item">
+        <span class="numero">1</span>
+        <p>La suma de fracciones es una <strong>operación aritmética de adición</strong> realizada entre dos números fraccionarios o más.</p>
+        <span class="fuente">Fuente: Significados [1]</span>
+      </div>
+
+      <div class="concepto-item">
+        <span class="numero">2</span>
+        <p>Una <strong>fracción</strong> es una expresión matemática que representa una parte de un todo, compuesta por dos números separados por una línea horizontal: el <strong>numerador</strong>, que representa la cantidad de partes que se toman, y el <strong>denominador</strong>, que representa el total de partes en que se divide el todo.</p>
+        <span class="fuente">Fuente: Universidad de las Fórmulas [2]</span>
+      </div>
+
+      <div class="concepto-item">
+        <span class="numero">3</span>
+        <p>Para que las fracciones se puedan sumar, es necesario que todas tengan el <strong>mismo denominador</strong>.</p>
+        <span class="fuente">Fuente: Significados [1]</span>
+      </div>
+
+      <div class="concepto-item">
+        <span class="numero">4</span>
+        <p>La suma de fracciones más sencilla es aquella donde los denominadores de cada fracción tienen en común el mismo número, ya que el proceso de la suma se basa en <strong>sumar los numeradores y dejar el mismo denominador</strong>.</p>
+        <span class="fuente">Fuente: Aula Fácil [3]</span>
+      </div>
+
+      <div class="concepto-item">
+        <span class="numero">5</span>
+        <p>Para sumar fracciones de distinto denominador, debemos encontrar el <strong>común denominador</strong>, dividir el común denominador entre el denominador de cada una de las fracciones y multiplicar el resultado de cada división por su correspondiente numerador, y finalmente sumar todos los numeradores y escribir el denominador obtenido.</p>
+        <span class="fuente">Fuente: Aula Fácil [3]</span>
+      </div>
+
+      <div class="concepto-item">
+        <span class="numero">6</span>
+        <p>Cuando necesitamos encontrar el denominador común utilizamos el procedimiento del <strong>Mínimo Común Múltiplo (MCM)</strong>.</p>
+        <span class="fuente">Fuente: Aula Fácil [3]</span>
+      </div>
+    </div>
+
+    <!-- Referencias bibliográficas -->
+    <div class="referencias-box" *ngIf="mostrarReferencias">
+      <h3>📖 Referencias Bibliográficas</h3>
+      <div class="referencia">
+        <span class="ref-numero">[1]</span>
+        <a href="https://www.significados.com/suma-de-fracciones/" target="_blank" rel="noopener">
+          Significados - Suma de fracciones
+        </a>
+      </div>
+      <div class="referencia">
+        <span class="ref-numero">[2]</span>
+        <a href="https://www.universoformulas.com/matematicas/aritmetica/suma-fracciones/" target="_blank" rel="noopener">
+          Universidad de las Fórmulas - Suma de fracciones
+        </a>
+      </div>
+      <div class="referencia">
+        <span class="ref-numero">[3]</span>
+        <a href="https://www.aulafacil.com/cursos/matematicas-primaria/trabajando-con-fracciones/suma-de-fracciones-l31207" target="_blank" rel="noopener">
+          Aula Fácil - Suma de fracciones
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Historia del Huerto -->
   <div class="story-section">
-    <div class="story-content">
+    <div class="story-header">
       <h3>🌱 Historia del Huerto de Marco</h3>
+      <button class="btn-nuevo-ejemplo" (click)="nuevoEjemplo()">
+        🔄 Nuevo Ejemplo
+      </button>
+    </div>
+    
+    <div class="story-content">
       <p>Marco tiene una huerta y un jardín.</p>
-      <p>Ha plantado <span class="fraccion">2/7</span> de la huerta con tomates,</p>
-      <p><span class="fraccion">3/7</span> con pimientos y <span class="fraccion">1/7</span> con zanahorias.</p>
-      <p>Después, ha plantado <span class="fraccion">1/4</span> del jardín con flores y <span class="fraccion">2/5</span> con césped.</p>
+      <p>Ha plantado <span class="fraccion">{{ejemplo.tomates.numerador}}/{{ejemplo.tomates.denominador}}</span> de la huerta con tomates,</p>
+      <p><span class="fraccion">{{ejemplo.pimientos.numerador}}/{{ejemplo.pimientos.denominador}}</span> con pimientos y <span class="fraccion">{{ejemplo.zanahorias.numerador}}/{{ejemplo.zanahorias.denominador}}</span> con zanahorias.</p>
+      <p>Después, ha plantado <span class="fraccion">{{ejemplo.flores.numerador}}/{{ejemplo.flores.denominador}}</span> del jardín con flores y <span class="fraccion">{{ejemplo.cesped.numerador}}/{{ejemplo.cesped.denominador}}</span> con césped.</p>
       <p class="question">¿Qué fracción de la huerta ha plantado en total? ¿Y del jardín?</p>
     </div>
     <div class="story-image">
-      <img src="assets/huerto.png" alt="Huerto de Marco" onerror="this.style.display='none'">
       <div class="fallback-image">🌱🌻🥕🍅</div>
     </div>
   </div>
@@ -22,7 +99,10 @@
       <div class="card-header">
         <span class="badge">De la huerta</span>
         <div class="operacion">
-          Suma <span class="fraccion-inline">2/7</span> + <span class="fraccion-inline">3/7</span> + <span class="fraccion-inline">1/7</span>
+          Suma 
+          <span class="fraccion-inline">{{ejemplo.tomates.numerador}}/{{ejemplo.tomates.denominador}}</span> + 
+          <span class="fraccion-inline">{{ejemplo.pimientos.numerador}}/{{ejemplo.pimientos.denominador}}</span> + 
+          <span class="fraccion-inline">{{ejemplo.zanahorias.numerador}}/{{ejemplo.zanahorias.denominador}}</span>
         </div>
       </div>
       
@@ -31,37 +111,37 @@
         
         <div class="calculo">
           <div class="fraccion-suma">
-            <span class="numerador">2</span>
+            <span class="numerador">{{ejemplo.tomates.numerador}}</span>
             <span class="linea"></span>
-            <span class="denominador">7</span>
+            <span class="denominador">{{ejemplo.tomates.denominador}}</span>
           </div>
           <span class="operador">+</span>
           <div class="fraccion-suma">
-            <span class="numerador">3</span>
+            <span class="numerador">{{ejemplo.pimientos.numerador}}</span>
             <span class="linea"></span>
-            <span class="denominador">7</span>
+            <span class="denominador">{{ejemplo.pimientos.denominador}}</span>
           </div>
           <span class="operador">+</span>
           <div class="fraccion-suma">
-            <span class="numerador">1</span>
+            <span class="numerador">{{ejemplo.zanahorias.numerador}}</span>
             <span class="linea"></span>
-            <span class="denominador">7</span>
+            <span class="denominador">{{ejemplo.zanahorias.denominador}}</span>
           </div>
           <span class="operador">=</span>
           <div class="fraccion-suma">
-            <span class="numerador">2 + 3 + 1</span>
+            <span class="numerador">{{ejemplo.tomates.numerador}} + {{ejemplo.pimientos.numerador}} + {{ejemplo.zanahorias.numerador}}</span>
             <span class="linea"></span>
-            <span class="denominador">7</span>
+            <span class="denominador">{{ejemplo.tomates.denominador}}</span>
           </div>
           <span class="operador">=</span>
           <div class="fraccion-suma resultado">
-            <span class="numerador">6</span>
+            <span class="numerador">{{ejemplo.resultadoHuerta.numerador}}</span>
             <span class="linea"></span>
-            <span class="denominador">7</span>
+            <span class="denominador">{{ejemplo.resultadoHuerta.denominador}}</span>
           </div>
         </div>
 
-        <p class="conclusion">Ha plantado <span class="fraccion-inline destacado">6/7</span> de la huerta.</p>
+        <p class="conclusion">Ha plantado <span class="fraccion-inline destacado">{{ejemplo.resultadoHuerta.numerador}}/{{ejemplo.resultadoHuerta.denominador}}</span> de la huerta.</p>
       </div>
     </div>
 
@@ -70,52 +150,58 @@
       <div class="card-header">
         <span class="badge">Del jardín</span>
         <div class="operacion">
-          Suma <span class="fraccion-inline">1/4</span> + <span class="fraccion-inline">2/5</span>
+          Suma 
+          <span class="fraccion-inline">{{ejemplo.flores.numerador}}/{{ejemplo.flores.denominador}}</span> + 
+          <span class="fraccion-inline">{{ejemplo.cesped.numerador}}/{{ejemplo.cesped.denominador}}</span>
         </div>
       </div>
       
       <div class="card-body">
         <p class="regla">Las fracciones tienen <strong>distinto denominador</strong>: redúcelas a común denominador y después suma las fracciones de igual denominador.</p>
         
+        <div class="paso-mcm">
+          <p><strong>Paso 1:</strong> Encontrar el MCM de {{ejemplo.flores.denominador}} y {{ejemplo.cesped.denominador}} = <span class="destacado">{{ejemplo.mcmJardin}}</span></p>
+        </div>
+
         <div class="calculo">
           <div class="fraccion-suma">
-            <span class="numerador">1</span>
+            <span class="numerador">{{ejemplo.flores.numerador}}</span>
             <span class="linea"></span>
-            <span class="denominador">4</span>
+            <span class="denominador">{{ejemplo.flores.denominador}}</span>
           </div>
           <span class="operador">+</span>
           <div class="fraccion-suma">
-            <span class="numerador">2</span>
+            <span class="numerador">{{ejemplo.cesped.numerador}}</span>
             <span class="linea"></span>
-            <span class="denominador">5</span>
+            <span class="denominador">{{ejemplo.cesped.denominador}}</span>
           </div>
           <span class="operador">=</span>
           <div class="fraccion-suma">
-            <span class="numerador">5</span>
+            <span class="numerador">{{calcularFraccionEquivalente(ejemplo.flores, ejemplo.mcmJardin).numerador}}</span>
             <span class="linea"></span>
-            <span class="denominador">20</span>
+            <span class="denominador">{{ejemplo.mcmJardin}}</span>
           </div>
           <span class="operador">+</span>
           <div class="fraccion-suma">
-            <span class="numerador">8</span>
+            <span class="numerador">{{calcularFraccionEquivalente(ejemplo.cesped, ejemplo.mcmJardin).numerador}}</span>
             <span class="linea"></span>
-            <span class="denominador">20</span>
+            <span class="denominador">{{ejemplo.mcmJardin}}</span>
           </div>
           <span class="operador">=</span>
           <div class="fraccion-suma">
-            <span class="numerador">5 + 8</span>
+            <span class="numerador">{{calcularFraccionEquivalente(ejemplo.flores, ejemplo.mcmJardin).numerador}} + {{calcularFraccionEquivalente(ejemplo.cesped, ejemplo.mcmJardin).numerador}}</span>
             <span class="linea"></span>
-            <span class="denominador">20</span>
+            <span class="denominador">{{ejemplo.mcmJardin}}</span>
           </div>
           <span class="operador">=</span>
           <div class="fraccion-suma resultado">
-            <span class="numerador">13</span>
+            <span class="numerador">{{ejemplo.resultadoJardin.numerador}}</span>
             <span class="linea"></span>
-            <span class="denominador">20</span>
+            <span class="denominador">{{ejemplo.resultadoJardin.denominador}}</span>
           </div>
         </div>
 
-        <p class="conclusion">Ha plantado <span class="fraccion-inline destacado">13/20</span> del jardín.</p>
+        <p class="conclusion">Ha plantado <span class="fraccion-inline destacado">{{ejemplo.resultadoJardin.numerador}}/{{ejemplo.resultadoJardin.denominador}}</span> del jardín.</p>
       </div>
     </div>
   </div>

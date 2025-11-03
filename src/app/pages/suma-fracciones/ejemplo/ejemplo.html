@@ -1,133 +1,100 @@
-<div class="ejemplo-container">
-  <h1>💡 Ejemplos de Suma de Fracciones</h1>
+<div class="contenedor-principal">
+  <!-- Encabezado -->
+  <header class="encabezado">
+    <h1>🧮 Suma de Fracciones</h1>
+    <p>Aprende jugando: escribe tus fracciones y observa cómo se suman visualmente</p>
+  </header>
 
-  <!-- Sección 1: Fracciones con igual denominador -->
-  <section class="ejercicios-section">
-    <h2>1. Calcula y explica cómo lo haces. Después, representa y comprueba la suma.</h2>
-    
-    <div class="ejercicios-grid">
-      <div class="ejercicio-card" *ngFor="let ej of ejercicios; let i = index">
-        <div class="ejercicio-header">
-          <div class="operacion">
-            <span *ngFor="let f of ej.fracciones; let j = index">
-              <div class="fraccion-visual">
-                <span class="num">{{f.numerador}}</span>
-                <span class="linea"></span>
-                <span class="den">{{f.denominador}}</span>
-              </div>
-              <span class="op" *ngIf="j < ej.fracciones.length - 1">+</span>
-            </span>
-          </div>
-        </div>
-
-        <div class="representacion-visual">
-          <div class="grid-container" [style.grid-template-columns]="'repeat(' + ej.cuadros + ', 1fr)'">
-            <div class="cuadro" *ngFor="let c of generarCuadros(ej.cuadros); let idx = index"
-                 [class.pintado]="idx < ej.fracciones[0].numerador"
-                 [class.pintado-alt]="idx >= ej.fracciones[0].numerador && idx < ej.fracciones[0].numerador + ej.fracciones[1].numerador">
-            </div>
-          </div>
-          <div class="grid-container" [style.grid-template-columns]="'repeat(' + ej.cuadros + ', 1fr)'">
-            <div class="cuadro" *ngFor="let c of generarCuadros(ej.cuadros); let idx = index"
-                 [class.pintado]="idx < ej.fracciones[0].numerador + ej.fracciones[1].numerador">
-            </div>
-          </div>
-        </div>
-
-        <button class="btn-toggle" (click)="toggleSolucion(i)">
-          {{ej.mostrarSolucion ? '🔼 Ocultar' : '🔽 Ver Solución'}}
-        </button>
-
-        <div class="solucion" *ngIf="ej.mostrarSolucion">
-          <p class="explicacion">
-            <strong>Mismo denominador:</strong> Sumamos los numeradores
-          </p>
-          <div class="calculo-resultado">
-            <span *ngFor="let f of ej.fracciones; let j = index">
-              {{f.numerador}}<span *ngIf="j < ej.fracciones.length - 1"> + </span>
-            </span>
-            = {{calcularSumaIgual(ej.fracciones).numerador}}
-          </div>
-          <div class="resultado-final">
-            <div class="fraccion-resultado">
-              <span class="num">{{calcularSumaIgual(ej.fracciones).numerador}}</span>
-              <span class="linea"></span>
-              <span class="den">{{calcularSumaIgual(ej.fracciones).denominador}}</span>
-            </div>
-          </div>
-        </div>
+  <!-- Sección de ingreso de fracciones -->
+  <section class="tarjeta entrada">
+    <h2>✨ Ingresa tus fracciones</h2>
+    <div class="entrada-fracciones">
+      <!-- Fracción 1 -->
+      <div class="fraccion">
+        <label>Fracción 1</label>
+        <input type="number" [(ngModel)]="f1.numerador" min="0" placeholder="Numerador" class="num color1" />
+        <span class="linea"></span>
+        <input type="number" [(ngModel)]="f1.denominador" min="1" placeholder="Denominador" class="den" />
       </div>
+
+      <span class="operador">+</span>
+
+      <!-- Fracción 2 -->
+      <div class="fraccion">
+        <label>Fracción 2</label>
+        <input type="number" [(ngModel)]="f2.numerador" min="0" placeholder="Numerador" class="num color2" />
+        <span class="linea"></span>
+        <input type="number" [(ngModel)]="f2.denominador" min="1" placeholder="Denominador" class="den" />
+      </div>
+
+      <button class="boton boton-calcular" (click)="calcular()">
+        ➕ Calcular Suma
+      </button>
     </div>
   </section>
 
-  <!-- Sección 2: Fracciones con distinto denominador -->
-  <section class="ejercicios-section">
-    <h2>2. Suma estas fracciones de distinto denominador.</h2>
-    
-    <div class="recuerda-box">
-      <div class="recuerda-header">RECUERDA</div>
-      <p>Antes de sumar, redúcelas a común denominador.</p>
+  <!-- Resultado visual -->
+  <section *ngIf="resultado" class="tarjeta resultado">
+    <h2>🎨 Representación Visual</h2>
+
+    <!-- Fracción 1 -->
+    <div class="fila">
+      <h3>Fracción 1</h3>
+      <div class="fraccion-visual">
+        <span class="num color1">{{ f1.numerador }}</span> /
+        <span>{{ f1.denominador }}</span>
+      </div>
+      <div class="cuadricula" [style.grid-template-columns]="'repeat(' + f1.denominador + ', 1fr)'">
+        <div
+          class="cuadro color1"
+          *ngFor="let c of generarCuadros(f1.denominador); let i = index"
+          [class.pintado]="i < f1.numerador"
+        ></div>
+      </div>
     </div>
 
-    <div class="ejercicios-grid-small">
-      <div class="ejercicio-mini" *ngFor="let ej of ejerciciosDiferente; let i = index">
-        <div class="operacion-mini">
-          <div class="fraccion-visual">
-            <span class="num">{{ej.f1.numerador}}</span>
-            <span class="linea"></span>
-            <span class="den">{{ej.f1.denominador}}</span>
-          </div>
-          <span class="op">+</span>
-          <div class="fraccion-visual">
-            <span class="num">{{ej.f2.numerador}}</span>
-            <span class="linea"></span>
-            <span class="den">{{ej.f2.denominador}}</span>
-          </div>
-          <span *ngIf="ej.f3">
-            <span class="op">+</span>
-            <div class="fraccion-visual">
-              <span class="num">{{ej.f3.numerador}}</span>
-              <span class="linea"></span>
-              <span class="den">{{ej.f3.denominador}}</span>
-            </div>
-          </span>
-        </div>
-
-        <button class="btn-mini" (click)="toggleSolucionDiferente(i)">
-          {{ej.mostrarSolucion ? '▲' : '▼'}}
-        </button>
-
-        <div class="solucion-mini" *ngIf="ej.mostrarSolucion">
-          <ng-container *ngIf="!ej.f3">
-            <p><strong>MCM({{ej.f1.denominador}}, {{ej.f2.denominador}}) = {{calcularSumaDiferente(ej.f1, ej.f2).mcm}}</strong></p>
-            <div class="conversion">
-              <div class="fraccion-visual">
-                <span class="num">{{calcularSumaDiferente(ej.f1, ej.f2).f1Conv.numerador}}</span>
-                <span class="linea"></span>
-                <span class="den">{{calcularSumaDiferente(ej.f1, ej.f2).mcm}}</span>
-              </div>
-              <span class="op">+</span>
-              <div class="fraccion-visual">
-                <span class="num">{{calcularSumaDiferente(ej.f1, ej.f2).f2Conv.numerador}}</span>
-                <span class="linea"></span>
-                <span class="den">{{calcularSumaDiferente(ej.f1, ej.f2).mcm}}</span>
-              </div>
-              <span class="op">=</span>
-              <div class="fraccion-visual destacado">
-                <span class="num">{{calcularSumaDiferente(ej.f1, ej.f2).resultado.numerador}}</span>
-                <span class="linea"></span>
-                <span class="den">{{calcularSumaDiferente(ej.f1, ej.f2).resultado.denominador}}</span>
-              </div>
-            </div>
-          </ng-container>
-        </div>
+    <!-- Fracción 2 -->
+    <div class="fila">
+      <h3>Fracción 2</h3>
+      <div class="fraccion-visual">
+        <span class="num color2">{{ f2.numerador }}</span> /
+        <span>{{ f2.denominador }}</span>
       </div>
+      <div class="cuadricula" [style.grid-template-columns]="'repeat(' + f2.denominador + ', 1fr)'">
+        <div
+          class="cuadro color2"
+          *ngFor="let c of generarCuadros(f2.denominador); let i = index"
+          [class.pintado]="i < f2.numerador"
+        ></div>
+      </div>
+    </div>
+
+    <!-- Resultado -->
+    <div class="fila final">
+      <h3>Resultado 🎯</h3>
+      <div class="fraccion-visual">
+        <span class="num color3">{{ resultado.numerador }}</span> /
+        <span>{{ resultado.denominador }}</span>
+      </div>
+      <div class="cuadricula" [style.grid-template-columns]="'repeat(' + resultado.denominador + ', 1fr)'">
+        <div
+          class="cuadro color3"
+          *ngFor="let c of generarCuadros(resultado.denominador); let i = index"
+          [class.pintado]="i < resultado.numerador"
+        ></div>
+      </div>
+    </div>
+
+    <div class="explicacion">
+      <p><strong>🧩 Paso 1:</strong> Encuentra el <em>MCM</em> de los denominadores.</p>
+      <p><strong>✏️ Paso 2:</strong> Ajusta los numeradores según el nuevo denominador.</p>
+      <p><strong>🎯 Paso 3:</strong> Suma los numeradores y conserva el denominador común.</p>
     </div>
   </section>
 
-  <nav class="navigation">
-    <a routerLink="/concepto" class="btn btn-prev">⬅️ Concepto</a>
-    <a routerLink="/" class="btn btn-home">🏠 Inicio</a>
-    <a routerLink="/ejercicio" class="btn btn-next">➡️ Practicar</a>
-  </nav>
+  <!-- Botones de navegación -->
+  <div class="botones-navegacion">
+    <button class="boton boton-volver">🔙 Regresar</button>
+    <button class="boton boton-ejercicio">🏁 Ir al Ejercicio</button>
+  </div>
 </div>
