@@ -14,7 +14,8 @@
           "builder": "@angular/build:application",
           "options":
            {
-            "outputPath": "dist/fracciones-pwa",
+"outputPath": "docs",
+"baseHref": "/fracciones-pwa/",
               "index": "src/index.html",
 
             "browser": "src/main.ts",
