@@ -1,100 +1,211 @@
 <div class="contenedor-principal">
   <!-- Encabezado -->
   <header class="encabezado">
-    <h1>🧮 Suma de Fracciones</h1>
-    <p>Aprende jugando: escribe tus fracciones y observa cómo se suman visualmente</p>
+    <div class="titulo-animado">
+      <span class="emoji-grande">🧮</span>
+      <h1>¡Aprende a Sumar Fracciones!</h1>
+      <p>Descubre cómo sumar fracciones de forma divertida y visual 🎨</p>
+    </div>
   </header>
 
   <!-- Sección de ingreso de fracciones -->
   <section class="tarjeta entrada">
-    <h2>✨ Ingresa tus fracciones</h2>
+    <h2>✨ Escribe tus Fracciones</h2>
     <div class="entrada-fracciones">
       <!-- Fracción 1 -->
-      <div class="fraccion">
-        <label>Fracción 1</label>
-        <input type="number" [(ngModel)]="f1.numerador" min="0" placeholder="Numerador" class="num color1" />
-        <span class="linea"></span>
-        <input type="number" [(ngModel)]="f1.denominador" min="1" placeholder="Denominador" class="den" />
+      <div class="fraccion-input">
+        <label class="etiqueta-fraccion color1-texto">
+          <span class="icono">🍕</span> Fracción 1
+        </label>
+        <div class="input-fraccion">
+          <input 
+            type="number" 
+            [(ngModel)]="f1.numerador" 
+            min="0" 
+            max="20"
+            placeholder="Numerador" 
+            class="num-input color1-borde" 
+          />
+          <span class="linea-division"></span>
+          <input 
+            type="number" 
+            [(ngModel)]="f1.denominador" 
+            min="1" 
+            max="20"
+            placeholder="Denominador" 
+            class="den-input" 
+          />
+        </div>
       </div>
 
-      <span class="operador">+</span>
+      <span class="operador-grande">+</span>
 
       <!-- Fracción 2 -->
-      <div class="fraccion">
-        <label>Fracción 2</label>
-        <input type="number" [(ngModel)]="f2.numerador" min="0" placeholder="Numerador" class="num color2" />
-        <span class="linea"></span>
-        <input type="number" [(ngModel)]="f2.denominador" min="1" placeholder="Denominador" class="den" />
+      <div class="fraccion-input">
+        <label class="etiqueta-fraccion color2-texto">
+          <span class="icono">🍰</span> Fracción 2
+        </label>
+        <div class="input-fraccion">
+          <input 
+            type="number" 
+            [(ngModel)]="f2.numerador" 
+            min="0" 
+            max="20"
+            placeholder="Numerador" 
+            class="num-input color2-borde" 
+          />
+          <span class="linea-division"></span>
+          <input 
+            type="number" 
+            [(ngModel)]="f2.denominador" 
+            min="1" 
+            max="20"
+            placeholder="Denominador" 
+            class="den-input" 
+          />
+        </div>
       </div>
 
-      <button class="boton boton-calcular" (click)="calcular()">
-        ➕ Calcular Suma
+      <button class="boton-calcular" (click)="calcular()">
+        <span class="boton-icono">➕</span>
+        <span>¡Sumar!</span>
       </button>
     </div>
   </section>
 
   <!-- Resultado visual -->
   <section *ngIf="resultado" class="tarjeta resultado">
-    <h2>🎨 Representación Visual</h2>
+    <h2 class="titulo-resultado">🎨 ¡Mira cómo se suman las Fracciones!</h2>
 
     <!-- Fracción 1 -->
-    <div class="fila">
-      <h3>Fracción 1</h3>
-      <div class="fraccion-visual">
-        <span class="num color1">{{ f1.numerador }}</span> /
-        <span>{{ f1.denominador }}</span>
+    <div class="fila-visual">
+      <div class="encabezado-fraccion">
+        <span class="icono-fraccion">🍕</span>
+        <h3>Fracción 1</h3>
+        <div class="fraccion-display color1-fondo">
+          <span class="num-grande">{{ f1.numerador }}</span>
+          <span class="linea-pequena"></span>
+          <span class="den-grande">{{ f1.denominador }}</span>
+        </div>
       </div>
-      <div class="cuadricula" [style.grid-template-columns]="'repeat(' + f1.denominador + ', 1fr)'">
-        <div
-          class="cuadro color1"
-          *ngFor="let c of generarCuadros(f1.denominador); let i = index"
-          [class.pintado]="i < f1.numerador"
-        ></div>
+      
+      <div class="visualizacion">
+        <div class="figuras-container">
+          <div 
+            class="figura color1-figura"
+            *ngFor="let c of generarCuadros(f1.denominador); let i = index"
+            [class.pintada]="i < f1.numerador"
+          >
+            <div class="figura-contenido">
+              <span *ngIf="i < f1.numerador" class="emoji-figura">🍕</span>
+              <span *ngIf="i >= f1.numerador" class="emoji-vacio">○</span>
+            </div>
+          </div>
+        </div>
+        <p class="explicacion-mini">
+          <strong>{{ f1.numerador }}</strong> de <strong>{{ f1.denominador }}</strong> partes
+        </p>
       </div>
     </div>
 
     <!-- Fracción 2 -->
-    <div class="fila">
-      <h3>Fracción 2</h3>
-      <div class="fraccion-visual">
-        <span class="num color2">{{ f2.numerador }}</span> /
-        <span>{{ f2.denominador }}</span>
+    <div class="fila-visual">
+      <div class="encabezado-fraccion">
+        <span class="icono-fraccion">🍰</span>
+        <h3>Fracción 2</h3>
+        <div class="fraccion-display color2-fondo">
+          <span class="num-grande">{{ f2.numerador }}</span>
+          <span class="linea-pequena"></span>
+          <span class="den-grande">{{ f2.denominador }}</span>
+        </div>
       </div>
-      <div class="cuadricula" [style.grid-template-columns]="'repeat(' + f2.denominador + ', 1fr)'">
-        <div
-          class="cuadro color2"
-          *ngFor="let c of generarCuadros(f2.denominador); let i = index"
-          [class.pintado]="i < f2.numerador"
-        ></div>
+      
+      <div class="visualizacion">
+        <div class="figuras-container">
+          <div 
+            class="figura color2-figura"
+            *ngFor="let c of generarCuadros(f2.denominador); let i = index"
+            [class.pintada]="i < f2.numerador"
+          >
+            <div class="figura-contenido">
+              <span *ngIf="i < f2.numerador" class="emoji-figura">🍰</span>
+              <span *ngIf="i >= f2.numerador" class="emoji-vacio">○</span>
+            </div>
+          </div>
+        </div>
+        <p class="explicacion-mini">
+          <strong>{{ f2.numerador }}</strong> de <strong>{{ f2.denominador }}</strong> partes
+        </p>
       </div>
     </div>
 
     <!-- Resultado -->
-    <div class="fila final">
-      <h3>Resultado 🎯</h3>
-      <div class="fraccion-visual">
-        <span class="num color3">{{ resultado.numerador }}</span> /
-        <span>{{ resultado.denominador }}</span>
+    <div class="fila-visual resultado-final">
+      <div class="encabezado-fraccion">
+        <span class="icono-fraccion">🎯</span>
+        <h3>Resultado</h3>
+        <div class="fraccion-display color3-fondo">
+          <span class="num-grande">{{ resultado.numerador }}</span>
+          <span class="linea-pequena"></span>
+          <span class="den-grande">{{ resultado.denominador }}</span>
+        </div>
       </div>
-      <div class="cuadricula" [style.grid-template-columns]="'repeat(' + resultado.denominador + ', 1fr)'">
-        <div
-          class="cuadro color3"
-          *ngFor="let c of generarCuadros(resultado.denominador); let i = index"
-          [class.pintado]="i < resultado.numerador"
-        ></div>
+      
+      <div class="visualizacion">
+        <div class="figuras-container">
+          <div 
+            class="figura color3-figura"
+            *ngFor="let c of generarCuadros(resultado.denominador); let i = index"
+            [class.pintada]="i < resultado.numerador"
+          >
+            <div class="figura-contenido">
+              <span *ngIf="i < resultado.numerador" class="emoji-figura">⭐</span>
+              <span *ngIf="i >= resultado.numerador" class="emoji-vacio">○</span>
+            </div>
+          </div>
+        </div>
+        <p class="explicacion-mini resultado-texto">
+          ¡La suma es <strong>{{ resultado.numerador }}</strong> de <strong>{{ resultado.denominador }}</strong> partes!
+        </p>
       </div>
     </div>
 
-    <div class="explicacion">
-      <p><strong>🧩 Paso 1:</strong> Encuentra el <em>MCM</em> de los denominadores.</p>
-      <p><strong>✏️ Paso 2:</strong> Ajusta los numeradores según el nuevo denominador.</p>
-      <p><strong>🎯 Paso 3:</strong> Suma los numeradores y conserva el denominador común.</p>
+    <!-- Explicación paso a paso -->
+    <div class="pasos-explicacion">
+      <h3 class="titulo-pasos">📚 ¿Cómo lo hicimos?</h3>
+      <div class="paso">
+        <span class="numero-paso">1</span>
+        <div class="contenido-paso">
+          <strong>Buscar el denominador común</strong>
+          <p>El MCM de {{ f1.denominador }} y {{ f2.denominador }} es {{ resultado.denominador }}</p>
+        </div>
+      </div>
+      <div class="paso">
+        <span class="numero-paso">2</span>
+        <div class="contenido-paso">
+          <strong>Ajustar las fracciones</strong>
+          <p>Convertimos ambas fracciones para que tengan el mismo denominador</p>
+        </div>
+      </div>
+      <div class="paso">
+        <span class="numero-paso">3</span>
+        <div class="contenido-paso">
+          <strong>Sumar los numeradores</strong>
+          <p>Sumamos las partes y mantenemos el denominador común</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Botones de navegación -->
-  <div class="botones-navegacion">
-    <button class="boton boton-volver">🔙 Regresar</button>
-    <button class="boton boton-ejercicio">🏁 Ir al Ejercicio</button>
-  </div>
+  <!-- Navegación -->
+  <nav class="botones-navegacion">
+    <button routerLink="/" class="boton-nav boton-regresar">
+      <span class="icono-nav">🏠</span>
+      Regresar al Inicio
+    </button>
+    <button routerLink="/ejercicio" class="boton-nav boton-continuar">
+      Ver Ejercicio
+      <span class="icono-nav">➡️</span>
+    </button>
+  </nav>
 </div>
